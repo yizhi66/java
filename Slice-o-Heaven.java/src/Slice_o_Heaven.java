@@ -19,6 +19,7 @@ public class Slice_o_Heaven {
     private final String DEF_ORDER_ID="DEF-SOH-099";
     private final String DEF_PIZZA_INGREDIENTS="Mozzarella Cheese";
     private final double DEF_ORDER_TOTAL=15.00;
+    
     public Slice_o_Heaven(String orderID, String pizzaIngredients, double orderTotal) {
         this.orderID = orderID;
         this.pizzaIngredients = pizzaIngredients;
@@ -49,6 +50,48 @@ public class Slice_o_Heaven {
        
         this.orderTotal = orderTotal;
     }
+    public void processCardPayment(String cardNumber, String expiryDate, int cvv,String blacklistedNumber) {
+
+        int cardLength = cardNumber.length();
+        if (cardLength == 14) {
+           
+                        if (cardNumber.equals(blacklistedNumber)) {
+                System.out.println("Card is blacklisted, Please use another card");
+                return;
+            }
+            System.out.println("Card accepted");
+        } else {
+            System.out.println("Invalid card");
+        }
+        String firstCharStr = cardNumber.substring(0, 1);
+        String lastfourCharStr = cardNumber.substring(cardNumber.length() - 4);
+        int lastfourCardDigit = Integer.parseInt(lastfourCharStr);
+        StringBuilder maskedPart = new StringBuilder();
+        for (int i = 0; i < cardLength - 5; i++) {
+            maskedPart.append('*');
+        }
+        String cardNumberToDisplay = firstCharStr + maskedPart + lastfourCardDigit;
+   
+    
+
+
+    
+        System.out.println("Processing card payment...");
+        System.out.println("Card number: " + cardNumber);
+        System.out.println("Expiry date: " + expiryDate);
+        System.out.println("CVV: " + cvv);
+        System.out.println("Payment processed successfully!");
+    }
+    public void specialOfTheDay(String pizzaOfTheDay, String sideOfTheDay, String specialPrice) {
+        StringBuilder message = new StringBuilder();
+        message.append("The special offer information of the day is as follows:\n");
+        message.append("The pizza of the day:").append(pizzaOfTheDay).append("\n");
+        message.append("The side dish of the day:").append(sideOfTheDay).append("\n");
+        message.append("Special price:").append(specialPrice);
+        System.out.println(message.toString());
+    }
+
+        
 
     public void Order() {
         this.orderID = DEF_ORDER_ID;
