@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
 public class Slice_o_Heaven {
     public String storeAddress;
 
@@ -99,13 +102,89 @@ public class Slice_o_Heaven {
         this.orderTotal = DEF_ORDER_TOTAL;
         this.sides = "None";
         this.drinks = "None";
-      }  
+    }  
+    public void isItYourBirthday(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter your birthdate (YYYY-MM-DD): ");
+        
+        String birthdate = input.nextLine();
+        int year = Integer.parseInt(birthdate.substring(0, 4));
+        int month = Integer.parseInt(birthdate.substring(5, 7));
+        int day = Integer.parseInt(birthdate.substring(8, 10));
+
+        LocalDate dob = LocalDate.of(year, month, day);
+        LocalDate now = LocalDate.now();
+
+        Period diff = Period.between(dob, now);
+
+        
+        System.out.println("You are " + diff.getYears() + " years old.");
+ 
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Is it your birthday? (Y/N)");
+            String answer = scanner.nextLine();
+            if (answer.equals("Y")) {
+                if(diff.getYears() >= 18){
+                    System.out.println("Congratulations! You get a 50% discount on your order.");
+                    this.orderTotal = this.orderTotal * 0.5;
+                }
+                else{
+                    System.out.println("Sorry, you are not old enough to get our 50% discount.");
+                }
+            }
+            if (answer.equals("N")) {
+                System.out.println("Too bad! You do not meet the conditions to get our 50% discount");
+            }
+        }
+        input.close();
+
+    
+    }
+    
 
 
 
     public void takeOrder(String id, String details, double ordertotal){
-        
-    ;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter three ingredients for your pizza (use spaces to separate ingredients):");
+        String[] ingredients = scanner.nextLine().split(" ");
+        String ing1 = ingredients[0];
+        String ing2 = ingredients[1];
+        String ing3 = ingredients[2];
+
+    
+        System.out.println("Enter size of pizza (Small, Medium, Large):");
+        String pizzaSize = scanner.nextLine();
+
+        System.out.println("Do you want extra cheese (Y/N):");
+        String extraCheese = scanner.nextLine();
+
+
+        System.out.println("Enter one side dish (Calzone, Garlic bread, None):");
+        String sideDish = scanner.nextLine();
+        System.out.println("Enter drinks(Cold Coffee, Cocoa drink, Coke, None):");
+        String drinks = scanner.nextLine();
+        System.out.println("Would you like the chance to pay only half for your order? (Y/N):");
+        String halfPayment = scanner.nextLine();
+
+        if (halfPayment.equals("Y")) {
+            isItYourBirthday();
+            
+        }
+
+    
+
+   
+        System.out.println("Your pizza ingredients are: " + ing1 + ", " + ing2 + ", " + ing3);
+        System.out.println("Pizza size: " + pizzaSize);
+        System.out.println("Extra cheese: " + extraCheese);
+        System.out.println("Side dish: " + sideDish);
+        System.out.println("Drinks: " + drinks);
+
+        scanner.close();
+      
 
         System.out.println("Order accepted!");
 
