@@ -1,7 +1,151 @@
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
+enum PizzaSelection{
+    PEPPERONI("Pepperoni", "Lots of pepperoni and extra cheese", 18),
+    HAWAIIAN("Hawaiian", "Pineapple, ham, and extra cheese", 22),
+    VEGGIE("Veggie", "Green pepper, onion, tomatoes, mushroom, and black olives", 25),
+    BBQ_CHICKEN("BBQ Chicken", "Chicken in BBQ sauce, bacon, onion, green pepper, and cheddar cheese", 35),
+    EXTRAVAGANZA("Extravaganza", "Pepperoni, ham, Italian sausage, beef, onions, green pepper, mushrooms, black olives, and extra cheese", 45);
+    private final String pizzaName;
+    private final String pizzaToppings;
+    private final int price;
+    PizzaSelection(String pizzaName, String pizzaToppings, int price) {
+        this.pizzaName = pizzaName;
+        this.pizzaToppings = pizzaToppings;
+        this.price = price;
+    }
+    public String getPizzaName() {
+        return pizzaName;
+    }
+    public String getPizzaToppings() {
+        return pizzaToppings;
+    }
+    public int getPrice() {
+        return price;
+    }
+    @Override
+    public String toString() {
+        return "Pizza: " + pizzaName +", Toppings: " + pizzaToppings + ", Price: $" + price;
+    }
+}
+enum PizzaToppings{
+    HAM("Ham", 2), 
+    PEPPERONI("Pepperoni" ,2),
+    BEEF("Beef", 2),
+    CHICKEN("Chicken", 2), 
+    SAUSAGE("Sausage", 2),
+    PINEAPPLE("Pineapple", 1),
+    ONION("Onion", 0.5), 
+    TOMATOES("Tomatoes", 0.4), 
+    GREEN_PEPPER("Green Pepper", 0.5), 
+    BLACK_OLIVES("Black Olives", 0.5), 
+    SPINACH("Spinach", 0.5), 
+    CHEDDAR_CHEESE("Cheddar Cheese", 0.8), 
+    MOZZARELLA_CHEESE("Mozzarella Cheese", 0.8), 
+    FETA_CHEESE("Feta Cheese", 1), 
+    PARMESAN_CHEESE("Parmesan Cheese", 1);  
+    private final String topping;
+    private final double toppingPrice;
+        PizzaToppings(String topping, double toppingPrice) {
+            this.topping = topping;
+            this.toppingPrice = toppingPrice;
+    }
+    public String getTopping() {
+        return topping;
+    }
+    public double getToppingPrice() {
+        return toppingPrice;
+    }
+    @Override
+    public String toString() {
+        return "Topping: " + topping + ", Price: $" + toppingPrice;
+    }
+}
+enum PizzaSize{
+    LARGE("Large", 10), 
+    MEDIUM("Medium", 5),
+    SMALL("Small", 0);
+    private final String pizzaSize;
+    private final double addToPizzaPrice;
+    PizzaSize(String pizzaSize, double addToPizzaPrice) {
+        this.pizzaSize = pizzaSize;
+        this.addToPizzaPrice = addToPizzaPrice;
+    }
+    public String getPizzaSize() {
+        return pizzaSize; 
+    }
+    public double getAddToPizzaPrice() {
+        return addToPizzaPrice; 
+    }
+    @Override
+    public String toString() {
+        return "Pizza Size: " + pizzaSize + ", Price: $" + addToPizzaPrice;
+    }
+}
+enum SideDish{
+    CALZONE("Calzone", 15), 
+   CHICKEN_PUFF("Chicken Puff", 20),
+    MUFFIN("Muffin", 12),
+    NOTHING("No side dish", 0);
+    private final String  sideDishName;
+    private final double addToPizzaPrice;
+    SideDish(String sideDishName, double addToPizzaPrice) {
+        this.sideDishName = sideDishName;
+        this.addToPizzaPrice = addToPizzaPrice;
+
+    }
+    public String getSideDishName() {
+        return sideDishName; 
+    }
+    public double getAddToPizzaPrice() {
+        return addToPizzaPrice;
+    }
+    @Override
+    public String toString() {
+        return "Side Dish: " + sideDishName + ", Price: $" + addToPizzaPrice;
+    }
+
+}
+enum Drinks{
+    COCA_COLA("Coca Cola", 8), 
+   COCOA_DRINK("Cocoa Drink", 10),
+    NOTHING("No drinks", 0);
+    private final String  drinkName;
+    private final double addToPizzaPrice;
+    Drinks(String drinkName, double addToPizzaPrice) {
+        this.drinkName = drinkName;
+        this.addToPizzaPrice = addToPizzaPrice; 
+
+    }
+    public String getDrinkName() {
+        return drinkName; 
+    }
+    public double getAddToPizzaPrice() {
+        return addToPizzaPrice;
+    }
+    @Override
+    public String toString() {
+        return "Drink: " + drinkName + ", Price: $" + addToPizzaPrice;
+    }
+}
+
+
 public class Slice_o_Heaven {
+    public  final double  PIZZA_BASE_PRICE=10.0;
+    private static final int MAX_TOPPINGS = 10;
+    String[] pizzasOrdered = new String[10];
+    String[] pizzaSizesOrdered = new String[10];
+    String[] sideDishesOrdered = new String[20];
+    String[] drinksOrdered = new String[20];
+    private int pizzaIndex = 0;
+    private double totalOrderPrice = 0;
+    private int drinkIndex = 0;
+    private int sideDishIndex = 0; 
+
+ 
+ 
+   
     public String storeAddress;
 
     private String storemenu;
@@ -13,7 +157,8 @@ public class Slice_o_Heaven {
     public String pizaaname;
     public String sides;
     public String pizzaIngredients;
-    public String drinks;
+
+
 
     private String orderID;
     private String orderDetails;
@@ -22,6 +167,8 @@ public class Slice_o_Heaven {
     private final String DEF_ORDER_ID="DEF-SOH-099";
     private final String DEF_PIZZA_INGREDIENTS="Mozzarella Cheese";
     private final double DEF_ORDER_TOTAL=15.00;
+
+  
     
     public Slice_o_Heaven(String orderID, String pizzaIngredients, double orderTotal) {
         this.orderID = orderID;
@@ -101,7 +248,7 @@ public class Slice_o_Heaven {
         this.orderDetails = DEF_PIZZA_INGREDIENTS;
         this.orderTotal = DEF_ORDER_TOTAL;
         this.sides = "None";
-        this.drinks = "None";
+
     }  
     public void isItYourBirthday(){
         Scanner input = new Scanner(System.in);
@@ -152,49 +299,118 @@ public class Slice_o_Heaven {
 
 
     }
-    
-
-
-
-    public void takeOrder(String id, String details, double ordertotal){
+    public void takeOrder() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter three ingredients for your pizza (use spaces to separate ingredients):");
-        String[] ingredients = scanner.nextLine().split(" ");
-        String ing1 = ingredients[0];
-        String ing2 = ingredients[1];
-        String ing3 = ingredients[2];
-              
-    
-        System.out.println("Enter size of pizza (Small, Medium, Large):");
-        String pizzaSize = scanner.nextLine();
+        boolean continueOrdering = true;
 
-        System.out.println("Do you want extra cheese (Y/N):");
-        String extraCheese = scanner.nextLine();
+        while (continueOrdering) {
+            // 显示菜单
+            System.out.println("Welcome to Slice - o - Heaven Pizzeria. Here’s what we serve:");
+            int option = 1;
+            for (PizzaSelection pizza : PizzaSelection.values()) {
+                System.out.println(option + ". " + pizza);
+                option++;
+            }
+            System.out.println(option + ". Custom Pizza with a maximum of 10 toppings that you choose");
 
+            System.out.print("Please enter your choice (1 - " + option + "): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        System.out.println("Enter one side dish (Calzone, Garlic bread, None):");
-        String sideDish = scanner.nextLine();
-        System.out.println("Enter drinks(Cold Coffee, Cocoa drink, Coke, None):");
-        String drinks = scanner.nextLine();
-        System.out.println("Would you like the chance to pay only half for your order? (Y/N):");
-        String halfPayment = scanner.nextLine();
+            String pizzaDescription;
+            double pizzaPrice;
 
-        if (halfPayment.equals("Y")) {
-            isItYourBirthday();
-            
+            if (choice >= 1 && choice <= 5) {
+                PizzaSelection selectedPizza = PizzaSelection.values()[choice - 1];
+                pizzaDescription = selectedPizza.toString();
+                pizzaPrice = selectedPizza.getPrice();
+            } else if (choice == 6) {
+                // 显示所有配料
+                System.out.println("Available toppings:");
+                for (PizzaToppings topping : PizzaToppings.values()) {
+                    System.out.println(topping.getTopping());
+                }
+
+                System.out.println("Please enter up to " + MAX_TOPPINGS + " toppings, separated by commas:");
+                String toppingInput = scanner.nextLine();
+                String[] chosenToppings = toppingInput.split(",");
+                StringBuilder toppingList = new StringBuilder();
+                pizzaPrice = PIZZA_BASE_PRICE;
+
+                for (int i = 0; i < Math.min(chosenToppings.length, MAX_TOPPINGS); i++) {
+                    String toppingName = chosenToppings[i].trim();
+                    for (PizzaToppings topping : PizzaToppings.values()) {
+                        if (topping.getTopping().equalsIgnoreCase(toppingName)) {
+                            if (toppingList.length() > 0) {
+                                toppingList.append(", ");
+                            }
+                            toppingList.append(topping.getTopping());
+                            pizzaPrice += topping.getToppingPrice();
+                            break;
+                        }
+                    }
+                }
+
+                pizzaDescription = "Custom Pizza with " + toppingList + ", for €" + pizzaPrice;
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+                continue;
+            }
+
+            pizzasOrdered[pizzaIndex] = pizzaDescription;
+            totalOrderPrice += pizzaPrice;
+
+            // 选择披萨尺寸
+            System.out.println("Available pizza sizes:");
+            option = 1;
+            for (PizzaSize size : PizzaSize.values()) {
+                System.out.println(option + ". " + size.getPizzaSize() + ": €" + size.getAddToPizzaPrice());
+                option++;
+            }
+            System.out.print("Please choose a pizza size (1 - " + (option - 1) + "): ");
+            int sizeChoice = scanner.nextInt();
+            scanner.nextLine();
+            PizzaSize selectedSize = PizzaSize.values()[sizeChoice - 1];
+            pizzaSizesOrdered[pizzaIndex] = selectedSize.getPizzaSize();
+            totalOrderPrice += selectedSize.getAddToPizzaPrice();
+
+            // 选择配菜
+            System.out.println("Available side dishes:");
+            option = 1;
+            for (SideDish sideDish : SideDish.values()) {
+                System.out.println(option + ". " + sideDish.getSideDishName() + ": €" + sideDish.getAddToPizzaPrice());
+                option++;
+            }
+            System.out.print("Please choose a side dish (1 - " + (option - 1) + "): ");
+            int sideDishChoice = scanner.nextInt();
+            scanner.nextLine();
+            SideDish selectedSideDish = SideDish.values()[sideDishChoice - 1];
+        sideDishesOrdered[sideDishIndex++] = selectedSideDish.getSideDishName();
+            totalOrderPrice += selectedSideDish.getAddToPizzaPrice();
+
+            // 选择饮料
+            System.out.println("Available drinks:");
+            option = 1;
+            for (Drinks drink : Drinks.values()) {
+                System.out.println(option + ". " + drink.getDrinkName() + ": €" + drink.getAddToPizzaPrice());
+                option++;
+            }
+            System.out.print("Please choose a drink (1 - " + (option - 1) + "): ");
+            int drinkChoice = scanner.nextInt();
+            scanner.nextLine();
+            Drinks selectedDrink = Drinks.values()[drinkChoice - 1];
+            drinksOrdered[drinkIndex++] = selectedDrink.getDrinkName();
+            totalOrderPrice += selectedDrink.getAddToPizzaPrice();
+
+            pizzaIndex++;
+
+            System.out.print("Do you want to order more? (yes/no): ");
+            String response = scanner.nextLine();
+            continueOrdering = response.equalsIgnoreCase("yes");
         }
     
 
-    
-
-   
-        System.out.println("Your pizza ingredients are: " + ing1 + ", " + ing2 + ", " + ing3);
-        System.out.println("Pizza size: " + pizzaSize);
-        System.out.println("Extra cheese: " + extraCheese);
-        System.out.println("Side dish: " + sideDish);
-        System.out.println("Drinks: " + drinks);
-
-        scanner.close();
+       
       
 
         System.out.println("Order accepted!");
@@ -301,27 +517,43 @@ public class Slice_o_Heaven {
         }
 
     }
-    public void makepizza(String id, String details, double ordertotal){
-        try{
-            Thread.sleep(5000);
-        } catch (InterruptedException e){
-            System.out.println("Order is ready for pickup!");
-        }
-    
-        System.out.println("Your pizza is ok!");
-
-        toString();
-    }
 
     @Override
-    public String toString() {
-        Order();
-        StringBuilder receipt = new StringBuilder();
-        receipt.append("********RECEIPT********\n");
-        receipt.append("Order ID: ").append(orderID).append("\n");
-        receipt.append("Order Details: ").append(orderDetails).append("\n");
-        receipt.append("Order Total: ").append(orderTotal);
-        return receipt.toString();
+    public  String toString() {
+        StringBuilder orderDetails = new StringBuilder();
+        orderDetails.append("Thank you for dining with Slice-o-Heaven Pizzeria. Your order details are as follows:\n");
+        for (int i = 0; i < pizzaIndex; i++) {
+            orderDetails.append(i + 1).append(". ").append(pizzasOrdered[i]).append("\n");
+            orderDetails.append(pizzaSizesOrdered[i]).append(": €").append(getSizePrice(pizzaSizesOrdered[i])).append("\n");
+            orderDetails.append(sideDishesOrdered[i]).append(": €").append(getSideDishPrice(sideDishesOrdered[i])).append("\n");
+            orderDetails.append(drinksOrdered[i]).append(": €").append(getDrinkPrice(drinksOrdered[i])).append("\n");
+        }
+        orderDetails.append("ORDER TOTAL: €").append(totalOrderPrice);
+        return orderDetails.toString();
     }
-    
+
+    private double getSizePrice(String size) {
+        for (PizzaSize pizzaSize : PizzaSize.values()) {
+            if (pizzaSize.getPizzaSize().equals(size)) {
+                return pizzaSize.getAddToPizzaPrice();
+            }
+        }
+        return 0;
+    }
+    private double getSideDishPrice(String sideDish) {
+        for (SideDish dish : SideDish.values()) {
+            if (dish.getSideDishName().equals(sideDish)) {
+                return dish.getAddToPizzaPrice();
+            }
+        }
+        return 0;
+    }
+    private double getDrinkPrice(String drink) {
+            for (Drinks drinkOption : Drinks.values()) {
+                if (drinkOption.getDrinkName().equals(drink)) {
+                    return drinkOption.getAddToPizzaPrice();
+            }
+        }
+        return 0;
+    }
 }
